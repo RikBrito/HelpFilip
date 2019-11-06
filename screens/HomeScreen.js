@@ -9,8 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import {Button} from 'native-base';
 import { MonoText } from '../components/StyledText';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 
 export default function HomeScreen() {
   return (
@@ -22,46 +24,69 @@ export default function HomeScreen() {
           <Image
             source={
               __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
+                ? require('../assets/images/icon.png')
+                : require('../assets/images/icon.png')
             }
             style={styles.welcomeImage}
           />
         </View>
 
         <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
+          
 
-          <Text style={styles.getStartedText}>Get started by opening</Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
+          <Text style={styles.getStartedText}>My Pet</Text>
         </View>
 
+        <View> 
+          
+         <Input
+            placeholder='Digite seu e-mail'
+            leftIcon={
+              <Icon
+              name='user'
+              size={24}
+              color='black'
+              />
+              }
+          />
+
+          <Input
+            placeholder='Digite sua Senha'
+            leftIcon={{ type: 'password', name: 'chevron-left' }}
+          />
+
+        </View>
+
+        <Button
+        buttonStyle={{ marginTop: 10 }}
+        backgroundColor="#808080"
+        title='Entrar'
+        onPress={() => {
+        onSignIn().then(() => navigation.navigation("SignedIn"));
+        }}
+        />
+
         <View style={styles.helpContainer}>
+        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+            <Text style={styles.helpLinkText}>
+              Cadastrar
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
             <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
+              Esqueci minha senha
             </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
       <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
+        
 
         <View
           style={[styles.codeHighlightContainer, styles.navigationFilename]}>
           <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
+            Ajuda e Suporte
           </MonoText>
         </View>
       </View>
@@ -73,7 +98,7 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
+/*function DevelopmentModeNotice() {
   if (__DEV__) {
     const learnMoreButton = (
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -94,7 +119,7 @@ function DevelopmentModeNotice() {
       </Text>
     );
   }
-}
+}*/
 
 function handleLearnMorePress() {
   WebBrowser.openBrowserAsync(
@@ -111,11 +136,11 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0000',
   },
   developmentModeText: {
     marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
+    color: '#000000',
     fontSize: 14,
     lineHeight: 19,
     textAlign: 'center',
@@ -193,6 +218,6 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     fontSize: 14,
-    color: '#2e78b7',
+    color: '#FFFF00',
   },
 });
