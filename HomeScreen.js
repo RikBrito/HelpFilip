@@ -9,8 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import {Button} from 'native-base';
 import { MonoText } from '../components/StyledText';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 
 export default function HomeScreen() {
   return (
@@ -34,7 +36,35 @@ export default function HomeScreen() {
 
           <Text style={styles.getStartedText}>My Pet</Text>
         </View>
-        
+
+        <View> 
+          
+         <Input
+            placeholder='Digite seu e-mail'
+            leftIcon={
+              <Icon
+              name='user'
+              size={24}
+              color='black'
+              />
+              }
+          />
+
+          <Input
+            placeholder='Digite sua Senha'
+            leftIcon={{ type: 'password', name: 'chevron-left' }}
+          />
+
+        </View>
+
+        <Button
+        buttonStyle={{ marginTop: 10 }}
+        backgroundColor="#808080"
+        title='Entrar'
+        onPress={() => {
+        onSignIn().then(() => navigation.navigation("SignedIn"));
+        }}
+        />
 
         <View style={styles.helpContainer}>
         <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
@@ -68,7 +98,7 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
+/*function DevelopmentModeNotice() {
   if (__DEV__) {
     const learnMoreButton = (
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -89,7 +119,7 @@ function DevelopmentModeNotice() {
       </Text>
     );
   }
-}
+}*/
 
 function handleLearnMorePress() {
   WebBrowser.openBrowserAsync(
@@ -106,7 +136,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00FA9A',
+    backgroundColor: '#0000',
   },
   developmentModeText: {
     marginBottom: 20,
