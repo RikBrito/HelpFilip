@@ -8,23 +8,42 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ImageBackground,
 } from 'react-native';
-import {Button} from 'native-base';
+import {Button, Card} from 'native-base';
 import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import styled from 'styled-components/native';
 
+const StyledCard = styled(Card)`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  margin-left: 65px;
+  width: 70%;
+  height: 400px;
+  elevation: 20;      
+`
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
+    <View 
+    
+    style={styles.container}>
+    <ImageBackground source={require("../assets/images/backgound.png")}
+    style={{flex: 1}}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
+          <StyledCard
+                  
+          >
         <View style={styles.welcomeContainer}>
           <Image
+          
             source={
               __DEV__
-                ? require('../assets/images/icon.png')
+                ? require('../assets/images/dog.png')
                 : require('../assets/images/icon.png')
             }
             style={styles.welcomeImage}
@@ -52,32 +71,49 @@ export default function HomeScreen() {
 
           <Input
             placeholder='Digite sua Senha'
-            leftIcon={{ type: 'password', name: 'chevron-left' }}
+            leftIcon={{ type: 'password', name: 'lock' }}
           />
 
         </View>
 
+        
+
+      <View style={styles.helpContainer}>
         <Button
-        buttonStyle={{ marginTop: 10 }}
-        backgroundColor="#808080"
-        title='Entrar'
+        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+        backgroundColor="#fff"
         onPress={() => {
         onSignIn().then(() => navigation.navigation("SignedIn"));
         }}
-        />
-
-        <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Cadastrar
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Esqueci minha senha
-            </Text>
-          </TouchableOpacity>
+        >
+          <Text
+          style={{marginLeft: 30}}
+          >Login</Text>
+        </Button>
+        <Button
+        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+        backgroundColor="#fff"
+        onPress={() => {
+        onSignIn().then(() => navigation.navigation("SignedIn"));
+        }}
+        >
+          <Text
+          style={{marginLeft: 20}}
+          >Cadastrar</Text>
+        </Button>
+        <Button
+        style={{ marginLeft: 80, marginRight: 90 }}
+        backgroundColor="#fff"
+        onPress={() => {
+        onSignIn().then(() => navigation.navigation("SignedIn"));
+        }}
+        >
+          <Text
+          style={{marginLeft: 20}}
+          >Recuperar Senha</Text>
+        </Button>
         </View>
+        </StyledCard>
       </ScrollView>
 
       <View style={styles.tabBarInfoContainer}>
@@ -90,6 +126,7 @@ export default function HomeScreen() {
           </MonoText>
         </View>
       </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -211,13 +248,13 @@ const styles = StyleSheet.create({
   },
   helpContainer: {
     marginTop: 15,
-    alignItems: 'center',
+    
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
     fontSize: 14,
-    color: '#FFFF00',
+    color: '#000',
   },
 });
