@@ -15,20 +15,24 @@ import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import styled from 'styled-components/native';
+import firebase from 'react-native-firebase';
+import { postLogin } from '../../services/auth';
+import InputDialog from '../../components/InputDialog';
+import alert from react;
 
 const StyledCard = styled(Card)`
   display: flex;
   justify-content: center;
   margin-top: 100px;
-  margin-left: 65px;
+  margin-left: 65%;
   width: 70%;
   height: 400px;
   elevation: 20;      
 `
 export default function HomeScreen() {
   return (
+
     <View 
-    
     style={styles.container}>
     <ImageBackground source={require("../assets/images/backgound.png")}
     style={{flex: 1}}>
@@ -36,11 +40,10 @@ export default function HomeScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
           <StyledCard
-                  
+
           >
         <View style={styles.welcomeContainer}>
           <Image
-          
             source={
               __DEV__
                 ? require('../assets/images/dog.png')
@@ -51,13 +54,10 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.getStartedContainer}>
-          
-
           <Text style={styles.getStartedText}>My Pet</Text>
         </View>
 
         <View> 
-          
          <Input
             placeholder='Digite seu e-mail'
             leftIcon={
@@ -73,30 +73,26 @@ export default function HomeScreen() {
             placeholder='Digite sua Senha'
             leftIcon={{ type: 'password', name: 'lock' }}
           />
-
         </View>
 
-        
-
       <View style={styles.helpContainer}>
+
+        //botão login
         <Button
         style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
         backgroundColor="#fff"
-        onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
-        }}
+        onPress={() => { onSignIn(); }}
         >
           <Text
           style={{marginLeft: 30}}
           >Login</Text>
+
+        //botão Cadastrar
         </Button>
-        <Button
-        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
-        backgroundColor="#fff"
-        onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
-        }}
-        >
+          <Button
+          style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+          backgroundColor="#fff"
+          onPress={() => {onSignIn()}}>
           <Text
           style={{marginLeft: 20}}
           >Cadastrar</Text>
@@ -105,7 +101,7 @@ export default function HomeScreen() {
         style={{ marginLeft: 80, marginRight: 90 }}
         backgroundColor="#fff"
         onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
+        onSignIn();
         }}
         >
           <Text
@@ -135,39 +131,29 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-/*function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
+function onSignIn() {
+  const { navigation } = this.props;
+    const { email, password } = this.state;
+    try {
+     
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      navigation.pop();
+    } catch (err) {
+      /* TODO: Error Dialog */
+      alert('Login incorreto');
+    }
+  };
 
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use
-        useful development tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}*/
+  toggleForgetPasswordDialog = () => {
+    this.setState(state => ({
+      forgetPasswordDialog: !state.forgetPasswordDialog
+    }));
+  };
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
-}
+  sendConfirmationLinkToEmail = (email) => {
+    console.log(email);
+    /* TODO: Send link to email */
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
 }
 
 const styles = StyleSheet.create({
