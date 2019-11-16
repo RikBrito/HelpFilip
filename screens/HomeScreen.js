@@ -39,9 +39,6 @@ export default function HomeScreen() {
     user: undefined
   }
 
-  export default fire;
-  export default init;
-
 return (
 
     <View 

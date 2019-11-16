@@ -28,7 +28,4 @@ export default class screens extends Component {
     />
      </View>
   )
-    
-  return <View />;
-  
 }
