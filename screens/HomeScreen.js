@@ -1,30 +1,64 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  ImageBackground,
+  component
 } from 'react-native';
-import {Button} from 'native-base';
+import {Button, Card} from 'native-base';
 import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import styled from 'styled-components/native';
+import fire from '../App';
+import alert from 'react';
+
+const StyledCard = styled(Card)`
+  display: flex;
+  justify-content: center;
+  margin-top: 100p%;
+  margin-left: 65%;
+  width: 70%;
+  height: 400%;
+  elevation: 20;      
+`
+this.state = ({
+  email: null,
+  password: null,
+});
 
 export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
+
+  this.state = {
+    user: undefined
+  }
+
+  export default fire;
+  export default init;
+
+return (
+
+    <View 
+    style={styles.container}>
+    <ImageBackground source={require("../assets/images/backgound.png")}
+    style={{flex: 1}}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
+          <StyledCard
+
+          >
         <View style={styles.welcomeContainer}>
           <Image
             source={
               __DEV__
-                ? require('../assets/images/icon.png')
+                ? require('../assets/images/dog.png')
                 : require('../assets/images/icon.png')
             }
             style={styles.welcomeImage}
@@ -32,18 +66,19 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.getStartedContainer}>
-          
-
           <Text style={styles.getStartedText}>My Pet</Text>
         </View>
 
         <View> 
-          
          <Input
             placeholder='Digite seu e-mail'
+            ref="email" 
+            className="form-control" 
+            id="exampleInputEmail1" 
+            aria-describedby="emailHelp" 
             leftIcon={
               <Icon
-              name='user'
+              name='email'
               size={24}
               color='black'
               />
@@ -52,32 +87,49 @@ export default function HomeScreen() {
 
           <Input
             placeholder='Digite sua Senha'
-            leftIcon={{ type: 'password', name: 'chevron-left' }}
+            ref="password" 
+            className="form-control" 
+            id="exampleInputPassword1" 
+            placeholder="Password"
+            leftIcon={{ type: 'password', name: 'lock' }}
           />
-
         </View>
 
+      <View style={styles.helpContainer}>
+
+        //botão login
         <Button
-        buttonStyle={{ marginTop: 10 }}
-        backgroundColor="#808080"
-        title='Entrar'
-        onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
-        }}
-        />
+        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+        backgroundColor="#fff"
+        onPress={() => { onSignIn(); }}
+        >
+          <Text
+          style={{marginLeft: 30}}
+          >Login</Text>
 
-        <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Cadastrar
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Esqueci minha senha
-            </Text>
-          </TouchableOpacity>
+        //botão Cadastrar
+        </Button>
+          <Button
+          style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+          backgroundColor="#fff"
+          onPress={() => {onSignIn()}}>
+          <Text
+          style={{marginLeft: 20}}
+          >Cadastrar</Text>
+        </Button>
+
+        //recuperar Senha
+        <Button
+        style={{ marginLeft: 80, marginRight: 90 }}
+        backgroundColor="#fff"
+        onPress={() => { toggleForgetPasswordDialog()}}
+        >
+          <Text
+          style={{marginLeft: 20}}
+          >Recuperar Senha</Text>
+        </Button>
         </View>
+        </StyledCard>
       </ScrollView>
 
       <View style={styles.tabBarInfoContainer}>
@@ -90,48 +142,42 @@ export default function HomeScreen() {
           </MonoText>
         </View>
       </View>
+      </ImageBackground>
     </View>
   );
-}
 
+
+this.onSignIn = this.onSignIn.bind(this);
 HomeScreen.navigationOptions = {
   header: null,
 };
 
-/*function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
+    function onSignIn() {
+    const { navigation } = this.props;
+    const { email, password } = this.state;
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(email);
+      if (email) {
+        this.setState({ user });
+        localStorage.setItem('email', user.uid);
+      } else {
+        this.setState({ email: null });
+        localStorage.removeItem('email');
+      }
+      // TODO: Error Dialog 
+      alert('Login incorreto');
+    })
 
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use
-        useful development tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}*/
+  toggleForgetPasswordDialog = () => {
+    this.setState(state => ({
+      forgetPasswordDialog: !state.forgetPasswordDialog
+    }))
+  };
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
-}
+  sendConfirmationLinkToEmail = (email) => {
+    console.log(email);
+    /* TODO: Send link to email */
+  };
 
 const styles = StyleSheet.create({
   container: {
@@ -211,13 +257,15 @@ const styles = StyleSheet.create({
   },
   helpContainer: {
     marginTop: 15,
-    alignItems: 'center',
+    
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
     fontSize: 14,
-    color: '#FFFF00',
+    color: '#000',
   },
-});
+  })
+    }
+}
