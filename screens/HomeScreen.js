@@ -16,7 +16,7 @@ import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
 import styled from 'styled-components/native';
-import firebase from 'firebase';
+import fire from '../App';
 import alert from 'react';
 
 const StyledCard = styled(Card)`
@@ -35,60 +35,12 @@ this.state = ({
 
 export default function HomeScreen() {
 
-  Config = {
-    apiKey: "AIzaSyASr0XuvRC2K_btO_MN7J9mBJiC386Ctao",
-    authDomain: "my-dog-app-36889.firebaseapp.com",
-    databaseURL: "https://my-dog-app-36889.firebaseio.com",
-    projectId: "my-dog-app-36889",
-    storageBucket: "my-dog-app-36889.appspot.com",
-    messagingSenderId: "815535862651",
-    appId: "1:815535862651:web:37df0b50722f0b4e0283de"
-  };
-
   this.state = {
     user: undefined
   }
 
-  const fire = firebase.initializeApp(config);
   export default fire;
-
-  componentDidMount(){
-    firebase.initializeApp(config);
-    this.auth = firebaseauth();
-  };
-
-  this.auth.signInWithEmailAndPassword(this.refs.email.value, this.refs.password.value).then(signedUser => {
-    this.setState({
-      user: signedUser
-    })
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode, ' - ', errorMessage);
-  });
-
-  this.auth.onAuthStateChanged((signedUser) => {
-    if (signedUser) {
-      // User is signed in.
-      this.setState({
-        user: signedUser
-      });
-      console.log('Incluindo no localStorage')
-      //Não é necessário incluir no localStorage
-      //pois a plataforma do Firebase já inclui.
-      //localStorage.setItem('firebase_auth', this.state.user);
-    } else {
-      console.log('The user has been logged out');
-      this.setState({
-        user: undefined
-      });
-      //Não é necessário incluir no localStorage
-      //pois a plataforma do Firebase já inclui.
-      //localStorage.removeItem('firebase_auth');
-    }
-  }); 
-}
+  export default init;
 
 return (
 
@@ -149,7 +101,7 @@ return (
         <Button
         style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
         backgroundColor="#fff"
-        onPress={() => { authenticate(); }}
+        onPress={() => { onSignIn(); }}
         >
           <Text
           style={{marginLeft: 30}}
@@ -200,7 +152,7 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
- /* function onSignIn() {
+    function onSignIn() {
     const { navigation } = this.props;
     const { email, password } = this.state;
     fire.auth().onAuthStateChanged((user) => {
@@ -220,19 +172,7 @@ HomeScreen.navigationOptions = {
     this.setState(state => ({
       forgetPasswordDialog: !state.forgetPasswordDialog
     }))
-  };*/
-  
-    authenticate(e) {
-      e.preventDefault();
-      console.log('Call Firebase to authenticate');
-      console.log(this.refs.email.value, '-', this.refs.password.value);
-    };
-
-    logout(){
-      console.log('User is about to be logged out.')
-      this.auth.signOut();
-    };
-
+  };
 
   sendConfirmationLinkToEmail = (email) => {
     console.log(email);
@@ -327,3 +267,5 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   })
+    }
+}
