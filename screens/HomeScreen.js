@@ -28,16 +28,8 @@ const StyledCard = styled(Card)`
   height: 400%;
   elevation: 20;      
 `
-this.state = ({
-  email: null,
-  password: null,
-});
 
 export default function HomeScreen() {
-
-  this.state = {
-    user: undefined
-  }
 
 return (
 
@@ -69,10 +61,6 @@ return (
         <View> 
          <Input
             placeholder='Digite seu e-mail'
-            ref="email" 
-            className="form-control" 
-            id="exampleInputEmail1" 
-            aria-describedby="emailHelp" 
             leftIcon={
               <Icon
               name='email'
@@ -84,14 +72,9 @@ return (
 
           <Input
             placeholder='Digite sua Senha'
-            ref="password" 
-            className="form-control" 
-            id="exampleInputPassword1" 
-            placeholder="Password"
             leftIcon={{ type: 'password', name: 'lock' }}
           />
         </View>
-
       <View style={styles.helpContainer}>
 
         //botão login
@@ -119,7 +102,7 @@ return (
         <Button
         style={{ marginLeft: 80, marginRight: 90 }}
         backgroundColor="#fff"
-        onPress={() => { toggleForgetPasswordDialog()}}
+        onPress={() => {toggleForgetPasswordDialog()}}
         >
           <Text
           style={{marginLeft: 20}}
@@ -143,12 +126,6 @@ return (
     </View>
   );
 
-
-this.onSignIn = this.onSignIn.bind(this);
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
     function onSignIn() {
     const { navigation } = this.props;
     const { email, password } = this.state;
@@ -164,7 +141,9 @@ HomeScreen.navigationOptions = {
       // TODO: Error Dialog 
       alert('Login incorreto');
     })
+  }
 
+  /*
   toggleForgetPasswordDialog = () => {
     this.setState(state => ({
       forgetPasswordDialog: !state.forgetPasswordDialog
@@ -173,8 +152,9 @@ HomeScreen.navigationOptions = {
 
   sendConfirmationLinkToEmail = (email) => {
     console.log(email);
-    /* TODO: Send link to email */
-  };
+    // TODO: Send link to email 
+  };*/
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -264,5 +244,3 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   })
-    }
-}
