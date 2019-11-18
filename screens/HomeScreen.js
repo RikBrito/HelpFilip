@@ -1,6 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   Image,
   Platform,
@@ -9,152 +8,146 @@ import {
   Text,
   View,
   ImageBackground,
-  component
 } from 'react-native';
 import {Button, Card} from 'native-base';
 import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
-import styled from 'styled-components/native';
-import fire from '../App';
 import alert from 'react';
+import styled from 'styled-components/native';
 
 const StyledCard = styled(Card)`
   display: flex;
   justify-content: center;
-  margin-top: 100p%;
-  margin-left: 65%;
+  margin-top: 100px;
+  margin-left: 65px;
   width: 70%;
   height: 400%;
-  elevation: 20;      
+  elevation: 20;
 `
 
 export default function HomeScreen() {
-
-return (
-
-    <View 
-    style={styles.container}>
-    <ImageBackground source={require("../assets/images/backgound.png")}
-    style={{flex: 1}}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-          <StyledCard
-
-          >
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/dog.png')
-                : require('../assets/images/icon.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          <Text style={styles.getStartedText}>My Pet</Text>
-        </View>
-
-        <View> 
-         <Input
-            placeholder='Digite seu e-mail'
-            leftIcon={
-              <Icon
-              name='email'
-              size={24}
-              color='black'
-              />
+  return (
+    <View style={styles.container}>
+      <ImageBackground> source={require("../assets/images/backgound.png")}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/dog.png')
+                  : require('../assets/images/icon.png')
               }
-          />
+              style={styles.welcomeImage}
+            />
+          </View>
 
-          <Input
-            placeholder='Digite sua Senha'
-            leftIcon={{ type: 'password', name: 'lock' }}
-          />
-        </View>
-      <View style={styles.helpContainer}>
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.getStartedText}>My Pet</Text>
 
-        //botão login
-        <Button
-        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
-        backgroundColor="#fff"
-        onPress={() => { onSignIn(); }}
-        >
-          <Text
-          style={{marginLeft: 30}}
-          >Login</Text>
+            
+            <View login> 
+              <Input
+                placeholder="Digite seu e-mail"
+                leftIcon={
+                  <Icon
+                  name="email"
+                  size={24}
+                  color='black'
+                  />
+                  }
+              />
 
-        //botão Cadastrar
-        </Button>
+              <Input
+                placeholder="Digite sua Senha"
+                leftIcon={{ type: 'password', name: "lock" }}
+              />
+            </View>
+          </View>
+          
+          //botão login
           <Button
-          style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
-          backgroundColor="#fff"
-          onPress={() => {onSignIn()}}>
-          <Text
-          style={{marginLeft: 20}}
-          >Cadastrar</Text>
-        </Button>
+            style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+            backgroundColor="#fff"
+            onPress={() => { onSignIn(); }}
+            >
+              <Text
+              style={{marginLeft: 30}}
+              >Login</Text>
+          </Button>
 
-        //recuperar Senha
-        <Button
-        style={{ marginLeft: 80, marginRight: 90 }}
-        backgroundColor="#fff"
-        onPress={() => {toggleForgetPasswordDialog()}}
-        >
-          <Text
-          style={{marginLeft: 20}}
-          >Recuperar Senha</Text>
-        </Button>
-        </View>
-        </StyledCard>
-      </ScrollView>
+          //botão Cadastrar
+            <Button
+            style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+            backgroundColor="#fff"
+            onPress={() => {onSignIn()}}>
+              <Text
+              style={{marginLeft: 20}}
+              >Cadastrar</Text>
+          </Button>
 
-      <View style={styles.tabBarInfoContainer}>
-        
+          //recuperar Senha
+          <Button
+            style={{ marginLeft: 80, marginRight: 90 }}
+            backgroundColor="#fff"
+            onPress={() => {toggleForgetPasswordDialog()}}
+            >
+              <Text
+              style={{marginLeft: 20}}
+              >Recuperar Senha</Text>
+          </Button>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            Ajuda e Suporte
-          </MonoText>
-        </View>
-      </View>
+            <View style={styles.helpContainer}>
+            
+            </View>
+              <View
+              style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+              <MonoText style={styles.codeHighlightText}>
+                Ajuda e Suporte
+              </MonoText>
+          </View>
+        </ScrollView>
       </ImageBackground>
     </View>
-  );
-
-    function onSignIn() {
-    const { navigation } = this.props;
-    const { email, password } = this.state;
-    fire.auth().onAuthStateChanged((user) => {
-      console.log(email);
-      if (email) {
-        this.setState({ user });
-        localStorage.setItem('email', user.uid);
-      } else {
-        this.setState({ email: null });
-        localStorage.removeItem('email');
-      }
-      // TODO: Error Dialog 
-      alert('Login incorreto');
-    })
-  }
-
-  /*
-  toggleForgetPasswordDialog = () => {
-    this.setState(state => ({
-      forgetPasswordDialog: !state.forgetPasswordDialog
-    }))
-  };
-
-  sendConfirmationLinkToEmail = (email) => {
-    console.log(email);
-    // TODO: Send link to email 
-  };*/
+);
 }
+
+//funções
+function onSignIn() {
+  if (__DEV__) {
+    const learnMoreButton = (
+      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
+        Learn more
+      </Text>
+    );
+
+    return (
+      <Text style={styles.developmentModeText}>
+        Development mode is enabled: your app will be slower but you can use
+        useful development tools. {learnMoreButton}
+      </Text>
+    );
+  } else {
+    return (
+      <Text style={styles.developmentModeText}>
+        You are not in development mode: your app will run at full speed.
+      </Text>
+    );
+  }
+}
+
+toggleForgetPasswordDialog = () => {
+  this.setState(state => ({
+    forgetPasswordDialog: !state.forgetPasswordDialog
+  }))
+};
+
+sendConfirmationLinkToEmail = (email) => {
+  console.log(email);
+  // TODO: Send link to email 
+};
 
 const styles = StyleSheet.create({
   container: {
