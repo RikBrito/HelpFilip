@@ -26,6 +26,7 @@ const StyledCard = styled(Card)`
   elevation: 20;      
 `
 export default function HomeScreen() {
+  
   return (
     <View 
     
@@ -83,7 +84,7 @@ export default function HomeScreen() {
         style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
         backgroundColor="#fff"
         onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
+         navigation.navigation("S");
         }}
         >
           <Text
@@ -94,7 +95,7 @@ export default function HomeScreen() {
         style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
         backgroundColor="#fff"
         onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
+        onSignIn().then(() => navigation.navigation("Menu"));
         }}
         >
           <Text
@@ -105,7 +106,7 @@ export default function HomeScreen() {
         style={{ marginLeft: 80, marginRight: 90 }}
         backgroundColor="#fff"
         onPress={() => {
-        onSignIn().then(() => navigation.navigation("SignedIn"));
+        onSignIn().then(() => this.props.navigation.navigate("MenuScreen"));
         }}
         >
           <Text
