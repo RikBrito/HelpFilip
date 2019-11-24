@@ -1,9 +1,6 @@
-import {Image, Button, Container } from 'native-base';
-
+import {Image, Button, View, Card } from 'native-base';
 import React, { Component } from 'react';
-
-
-
+import { Container } from './styles';
 
 export default class screens extends Component {
   render() {
@@ -19,7 +16,7 @@ export default class screens extends Component {
         <Image src='../assets/images/ar.png'></Image>
         <Button class="btn">Pesquisar</Button>
     
-</Container>
+    </Container>
     )
   }
 }

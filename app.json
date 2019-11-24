@@ -1,5 +1,5 @@
 {
-  "expo": {
+  "expo":{ 
     "name": "MyPet",
     "slug": "MyPet",
     "privacy": "public",
@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "2.10.10",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -26,5 +26,6 @@
     "ios": {
       "supportsTablet": true
     }
+    
   }
 }

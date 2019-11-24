@@ -6,7 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ImageBackground,
 } from 'react-native';
@@ -14,6 +13,7 @@ import {Button, Card} from 'native-base';
 import { MonoText } from '../components/StyledText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import alert from 'react';
 import styled from 'styled-components/native';
 
 const StyledCard = styled(Card)`
@@ -22,121 +22,101 @@ const StyledCard = styled(Card)`
   margin-top: 100px;
   margin-left: 65px;
   width: 70%;
-  height: 400px;
-  elevation: 20;      
+  height: 400%;
+  elevation: 20;
 `
+
 export default function HomeScreen() {
   
   return (
-    <View 
-    
-    style={styles.container}>
-    <ImageBackground source={require("../assets/images/backgound.png")}
-    style={{flex: 1}}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-          <StyledCard
-                  
-          >
-        <View style={styles.welcomeContainer}>
-          <Image
-          
-            source={
-              __DEV__
-                ? require('../assets/images/dog.png')
-                : require('../assets/images/icon.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
-
-        <View style={styles.getStartedContainer}>
-          
-
-          <Text style={styles.getStartedText}>My Pet</Text>
-        </View>
-
-        <View> 
-          
-         <Input
-            placeholder='Digite seu e-mail'
-            leftIcon={
-              <Icon
-              name='user'
-              size={24}
-              color='black'
-              />
+    <View style={styles.container}>
+      <ImageBackground> source={require("../assets/images/backgound.png")}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/dog.png')
+                  : require('../assets/images/icon.png')
               }
-          />
+              style={styles.welcomeImage}
+            />
+          </View>
 
-          <Input
-            placeholder='Digite sua Senha'
-            leftIcon={{ type: 'password', name: 'lock' }}
-          />
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.getStartedText}>My Pet</Text>
 
-        </View>
+            
+            <View login> 
+              <Input
+                placeholder="Digite seu e-mail"
+                leftIcon={
+                  <Icon
+                  name="email"
+                  size={24}
+                  color='black'
+                  />
+                  }
+              />
 
-        
+              <Input
+                placeholder="Digite sua Senha"
+                leftIcon={{ type: 'password', name: "lock" }}
+              />
+            </View>
+          </View>
+          
+          //botão login
+          <Button
+            style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+            backgroundColor="#fff"
+            onPress={() => { onSignIn(); }}
+            >
+              <Text
+              style={{marginLeft: 30}}
+              >Login</Text>
+          </Button>
 
-      <View style={styles.helpContainer}>
-        <Button
-        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
-        backgroundColor="#fff"
-        onPress={() => {
-         navigation.navigation("S");
-        }}
-        >
-          <Text
-          style={{marginLeft: 30}}
-          >Login</Text>
-        </Button>
-        <Button
-        style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
-        backgroundColor="#fff"
-        onPress={() => {
-        onSignIn().then(() => navigation.navigation("Menu"));
-        }}
-        >
-          <Text
-          style={{marginLeft: 20}}
-          >Cadastrar</Text>
-        </Button>
-        <Button
-        style={{ marginLeft: 80, marginRight: 90 }}
-        backgroundColor="#fff"
-        onPress={() => {
-        onSignIn().then(() => this.props.navigation.navigate("MenuScreen"));
-        }}
-        >
-          <Text
-          style={{marginLeft: 20}}
-          >Recuperar Senha</Text>
-        </Button>
-        </View>
-        </StyledCard>
-      </ScrollView>
+          //botão Cadastrar
+            <Button
+            style={{ marginLeft: 80, marginRight: 90, marginBottom:5 }}
+            backgroundColor="#fff"
+            onPress={() => {onSignIn()}}>
+              <Text
+              style={{marginLeft: 20}}
+              >Cadastrar</Text>
+          </Button>
 
-      <View style={styles.tabBarInfoContainer}>
-        
+          //recuperar Senha
+          <Button
+            style={{ marginLeft: 80, marginRight: 90 }}
+            backgroundColor="#fff"
+            onPress={() => {toggleForgetPasswordDialog()}}
+            >
+              <Text
+              style={{marginLeft: 20}}
+              >Recuperar Senha</Text>
+          </Button>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            Ajuda e Suporte
-          </MonoText>
-        </View>
-      </View>
+            <View style={styles.helpContainer}>
+            
+            </View>
+              <View
+              style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+              <MonoText style={styles.codeHighlightText}>
+                Ajuda e Suporte
+              </MonoText>
+          </View>
+        </ScrollView>
       </ImageBackground>
     </View>
-  );
+);
 }
 
-HomeScreen.navigationOptions = {
-  header: null,
-};
-
-/*function DevelopmentModeNotice() {
+//funções
+function onSignIn() {
   if (__DEV__) {
     const learnMoreButton = (
       <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -157,19 +137,18 @@ HomeScreen.navigationOptions = {
       </Text>
     );
   }
-}*/
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
 }
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
-}
+toggleForgetPasswordDialog = () => {
+  this.setState(state => ({
+    forgetPasswordDialog: !state.forgetPasswordDialog
+  }))
+};
+
+sendConfirmationLinkToEmail = (email) => {
+  console.log(email);
+  // TODO: Send link to email 
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -258,4 +237,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
-});
+  })
